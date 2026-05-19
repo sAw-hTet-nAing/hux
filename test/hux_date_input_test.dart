@@ -113,6 +113,64 @@ void main() {
       expect(textField.enabled, isFalse);
     });
 
+    testWidgets('keeps caret collapsed when typing a full date',
+        (WidgetTester tester) async {
+      final controller = TextEditingController();
+      DateTime? selectedDate;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: HuxDateInput(
+              controller: controller,
+              initialDate: DateTime(2026, 8, 25),
+              onDateChanged: (date) {
+                selectedDate = date;
+              },
+            ),
+          ),
+        ),
+      );
+
+      final field = find.byType(TextFormField);
+      await tester.tap(field);
+      await tester.enterText(field, '08252026');
+      await tester.pump();
+
+      expect(controller.text, equals('08/25/2026'));
+      expect(controller.selection.start, equals(controller.text.length));
+      expect(controller.selection.end, equals(controller.text.length));
+      expect(selectedDate, isNotNull);
+      expect(selectedDate, equals(DateTime(2026, 8, 25)));
+
+      controller.dispose();
+    });
+
+    testWidgets('defers initialDate controller sync until after build',
+        (WidgetTester tester) async {
+      final controller = TextEditingController();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: _DateInputHarness(controller: controller),
+          ),
+        ),
+      );
+
+      final field = find.byType(TextFormField);
+      await tester.tap(field);
+      await tester.enterText(field, '08252026');
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+      expect(controller.text, equals('08/25/2026'));
+      expect(controller.selection.start, equals(controller.text.length));
+      expect(controller.selection.end, equals(controller.text.length));
+
+      controller.dispose();
+    });
+
     testWidgets('applies different sizes correctly',
         (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -185,3 +243,30 @@ void main() {
     });
   });
 }
+
+class _DateInputHarness extends StatefulWidget {
+  const _DateInputHarness({required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  State<_DateInputHarness> createState() => _DateInputHarnessState();
+}
+
+class _DateInputHarnessState extends State<_DateInputHarness> {
+  DateTime? _selectedDate = DateTime(2026, 8, 25);
+
+  @override
+  Widget build(BuildContext context) {
+    return HuxDateInput(
+      controller: widget.controller,
+      initialDate: _selectedDate,
+      onDateChanged: (date) {
+        setState(() {
+          _selectedDate = date;
+        });
+      },
+    );
+  }
+}
+

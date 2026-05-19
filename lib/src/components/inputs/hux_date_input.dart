@@ -108,6 +108,9 @@ class _HuxDateInputState extends State<HuxDateInput> {
   late TextEditingController _controller;
   DateTime? _selectedDate;
   String? _errorText;
+  bool _isUpdatingControllerText = false;
+  String? _pendingControllerText;
+  bool _controllerTextUpdateScheduled = false;
 
   @override
   void initState() {
@@ -123,7 +126,7 @@ class _HuxDateInputState extends State<HuxDateInput> {
     super.didUpdateWidget(oldWidget);
     if (widget.initialDate != oldWidget.initialDate) {
       _selectedDate = widget.initialDate;
-      _updateControllerText();
+      _updateControllerText(deferIfBuilding: true);
     }
     if (widget.controller != oldWidget.controller) {
       _controller = widget.controller ?? _controller;
@@ -138,13 +141,15 @@ class _HuxDateInputState extends State<HuxDateInput> {
     super.dispose();
   }
 
-  void _updateControllerText() {
-    if (_selectedDate != null) {
-      final format = widget.format ?? _getDefaultFormat();
-      _controller.text = format.format(_selectedDate!);
-    } else {
-      _controller.text = '';
+  void _updateControllerText({bool deferIfBuilding = false}) {
+    final text = _selectedDate != null
+        ? (widget.format ?? _getDefaultFormat()).format(_selectedDate!)
+        : '';
+    if (deferIfBuilding) {
+      _scheduleControllerTextUpdate(text);
+      return;
     }
+    _setControllerText(text);
   }
 
   DateFormat _getDefaultFormat() {
@@ -161,6 +166,8 @@ class _HuxDateInputState extends State<HuxDateInput> {
   }
 
   void _handleTextChanged(String value) {
+    if (_isUpdatingControllerText) return;
+
     if (!widget.allowManualInput) return;
 
     if (value.isEmpty) {
@@ -178,10 +185,7 @@ class _HuxDateInputState extends State<HuxDateInput> {
     // Update the controller with formatted text (without triggering onChanged again)
     if (formattedValue != value) {
       _controller.removeListener(_onControllerChanged);
-      _controller.text = formattedValue;
-      _controller.selection = TextSelection.fromPosition(
-        TextPosition(offset: formattedValue.length),
-      );
+      _setControllerText(formattedValue);
       _controller.addListener(_onControllerChanged);
     }
 
@@ -237,6 +241,37 @@ class _HuxDateInputState extends State<HuxDateInput> {
 
   void _onControllerChanged() {
     // This prevents infinite loops when updating the controller
+  }
+
+  void _setControllerText(String text) {
+    if (_controller.text == text) return;
+
+    _isUpdatingControllerText = true;
+    _controller.value = TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+    _isUpdatingControllerText = false;
+  }
+
+  void _scheduleControllerTextUpdate(String text) {
+    _pendingControllerText = text;
+
+    if (_controllerTextUpdateScheduled) {
+      return;
+    }
+
+    _controllerTextUpdateScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controllerTextUpdateScheduled = false;
+
+      if (!mounted) return;
+
+      final pendingText = _pendingControllerText;
+      if (pendingText == null) return;
+
+      _setControllerText(pendingText);
+    });
   }
 
   String _formatDateForError(DateTime date) {
@@ -302,7 +337,7 @@ class _HuxDateInputState extends State<HuxDateInput> {
       autoValidateMode: widget.autovalidateMode,
       inputFormatters: [
         if (widget.format != null)
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9/\-\.]')),
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9/.-]')),
       ],
     );
   }
