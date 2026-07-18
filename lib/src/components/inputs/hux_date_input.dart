@@ -44,6 +44,7 @@ class HuxDateInput extends StatefulWidget {
     this.validator,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.width,
+    this.isRequired = false,
   });
 
   /// Controller for the text field
@@ -100,6 +101,8 @@ class HuxDateInput extends StatefulWidget {
   /// Width of the text field (optional, defaults to full width)
   final double? width;
 
+  /// Whether the field is required. If true, an asterisk will be displayed next to the label.
+  final bool isRequired;
   @override
   State<HuxDateInput> createState() => _HuxDateInputState();
 }
@@ -142,9 +145,7 @@ class _HuxDateInputState extends State<HuxDateInput> {
   }
 
   void _updateControllerText({bool deferIfBuilding = false}) {
-    final text = _selectedDate != null
-        ? (widget.format ?? _getDefaultFormat()).format(_selectedDate!)
-        : '';
+    final text = _selectedDate != null ? (widget.format ?? _getDefaultFormat()).format(_selectedDate!) : '';
     if (deferIfBuilding) {
       _scheduleControllerTextUpdate(text);
       return;
@@ -196,16 +197,14 @@ class _HuxDateInputState extends State<HuxDateInput> {
       // Validate date range if specified
       if (widget.firstDate != null && parsedDate.isBefore(widget.firstDate!)) {
         setState(() {
-          _errorText =
-              'Date cannot be before ${_formatDateForError(widget.firstDate!)}';
+          _errorText = 'Date cannot be before ${_formatDateForError(widget.firstDate!)}';
         });
         return;
       }
 
       if (widget.lastDate != null && parsedDate.isAfter(widget.lastDate!)) {
         setState(() {
-          _errorText =
-              'Date cannot be after ${_formatDateForError(widget.lastDate!)}';
+          _errorText = 'Date cannot be after ${_formatDateForError(widget.lastDate!)}';
         });
         return;
       }
@@ -336,9 +335,9 @@ class _HuxDateInputState extends State<HuxDateInput> {
       validator: (_) => _validateDate(_selectedDate),
       autoValidateMode: widget.autovalidateMode,
       inputFormatters: [
-        if (widget.format != null)
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9/.-]')),
+        if (widget.format != null) FilteringTextInputFormatter.allow(RegExp(r'[0-9/.-]')),
       ],
+      isRequired: widget.isRequired,
     );
   }
 }

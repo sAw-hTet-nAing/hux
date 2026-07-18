@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hux/src/widgets/hux_text_field_label.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../theme/hux_tokens.dart';
 
 /// HuxInput is a customizable text input component with consistent styling
@@ -50,6 +52,7 @@ class HuxInput extends StatefulWidget {
     this.validator,
     this.iconSize,
     this.width,
+    this.isRequired = false,
   });
 
   /// Focus node for managing focus state of the text field
@@ -114,6 +117,9 @@ class HuxInput extends StatefulWidget {
 
   /// Width of the text field (optional, defaults to full width)
   final double? width;
+
+  /// Whether the field is required. If true, an asterisk will be displayed next to the label.
+  final bool isRequired;
 
   @override
   State<HuxInput> createState() => _HuxInputState();
@@ -182,14 +188,7 @@ class _HuxInputState extends State<HuxInput> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (widget.label != null) ...[
-        Text(
-          widget.label!,
-          style: TextStyle(
-            fontSize: Theme.of(context).textTheme.labelMedium?.fontSize ?? 12,
-            fontWeight: FontWeight.w300,
-            color: HuxTokens.textSecondary(context),
-          ),
-        ),
+        HuxTextFieldLabel(isRequired: widget.isRequired, value: widget.label),
         const SizedBox(height: 6),
       ],
       SizedBox(
@@ -199,7 +198,6 @@ class _HuxInputState extends State<HuxInput> {
           controller: widget.controller,
           obscureText: _obscureText,
           enabled: widget.enabled,
-
           maxLines: widget.maxLines,
           minLines: widget.minLines,
           inputFormatters: widget.inputFormatters,
@@ -217,15 +215,12 @@ class _HuxInputState extends State<HuxInput> {
             isDense: true,
             visualDensity: VisualDensity.comfortable,
             hintText: widget.hint,
-            prefixIcon: widget.prefixIcon != null
-                ? _buildIcon(widget.prefixIcon!,
-                    isPrefix: true, context: context)
-                : null,
+            prefixIcon:
+                widget.prefixIcon != null ? _buildIcon(widget.prefixIcon!, isPrefix: true, context: context) : null,
             suffixIcon: _isPasswordField
                 ? _buildPasswordToggleIcon(context)
                 : (widget.suffixIcon != null
-                    ? _buildIcon(widget.suffixIcon!,
-                        isPrefix: false, context: context)
+                    ? _buildIcon(widget.suffixIcon!, isPrefix: false, context: context)
                     : null),
             prefixIconConstraints: widget.prefixIcon != null
                 ? BoxConstraints(
@@ -233,13 +228,12 @@ class _HuxInputState extends State<HuxInput> {
                     maxWidth: _getIconConstraintWidth(),
                   )
                 : null,
-            suffixIconConstraints:
-                (_isPasswordField || widget.suffixIcon != null)
-                    ? BoxConstraints(
-                        minWidth: _getIconConstraintWidth(),
-                        maxWidth: _getIconConstraintWidth(),
-                      )
-                    : null,
+            suffixIconConstraints: (_isPasswordField || widget.suffixIcon != null)
+                ? BoxConstraints(
+                    minWidth: _getIconConstraintWidth(),
+                    maxWidth: _getIconConstraintWidth(),
+                  )
+                : null,
             errorText: widget.errorText,
             helperText: widget.helperText,
             contentPadding: EdgeInsets.symmetric(
@@ -285,9 +279,7 @@ class _HuxInputState extends State<HuxInput> {
               ),
             ),
             filled: true,
-            fillColor: widget.enabled
-                ? HuxTokens.surfacePrimary(context)
-                : HuxTokens.surfaceSecondary(context),
+            fillColor: widget.enabled ? HuxTokens.surfacePrimary(context) : HuxTokens.surfaceSecondary(context),
           ),
         ),
       ),
@@ -300,8 +292,7 @@ class _HuxInputState extends State<HuxInput> {
   //   return 40; // Single consistent height for all text fields
   // }
 
-  Widget _buildIcon(Widget icon,
-      {required bool isPrefix, required BuildContext context}) {
+  Widget _buildIcon(Widget icon, {required bool isPrefix, required BuildContext context}) {
     final effectiveIconSize = widget.iconSize ?? _getDefaultIconSize();
     final outerPadding = _getIconHorizontalPadding();
     const innerPadding = 4.0; // Small gap between icon and text
