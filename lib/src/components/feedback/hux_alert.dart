@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+
 import '../../theme/hux_tokens.dart';
 
 /// HuxAlert is a feedback message component that follows the Hux design system
@@ -81,8 +82,7 @@ class HuxAlert extends StatelessWidget {
                   Text(
                     title!,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight:
-                              FontWeight.w600, // Consistent with Hux typography
+                          fontWeight: FontWeight.w600, // Consistent with Hux typography
                           color: _getTextColor(context),
                         ),
                   ),
@@ -127,8 +127,7 @@ class HuxAlert extends StatelessWidget {
       case HuxAlertVariant.success:
         return HuxTokens.surfaceSuccess(context);
       case HuxAlertVariant.warning:
-        return const Color(0xFFF59E0B)
-            .withValues(alpha: 0.1); // Amber background
+        return const Color(0xFFF59E0B).withValues(alpha: 0.1); // Amber background
       case HuxAlertVariant.error:
         return HuxTokens.surfaceDestructive(context);
     }
@@ -178,11 +177,11 @@ class HuxAlert extends StatelessWidget {
       case HuxAlertVariant.info:
         return LucideIcons.info;
       case HuxAlertVariant.success:
-        return LucideIcons.checkCircle;
+        return LucideIcons.circle_check;
       case HuxAlertVariant.warning:
-        return LucideIcons.alertTriangle;
+        return LucideIcons.triangle_alert;
       case HuxAlertVariant.error:
-        return LucideIcons.alertCircle;
+        return LucideIcons.circle_alert;
     }
   }
 }

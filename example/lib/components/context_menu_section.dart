@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import 'section_with_documentation.dart';
 
 class ContextMenuSection extends StatelessWidget {
@@ -13,9 +15,7 @@ class ContextMenuSection extends StatelessWidget {
   });
 
   Color _currentPrimaryColor(BuildContext context) {
-    return selectedTheme == 'default'
-        ? HuxTokens.primary(context)
-        : HuxColors.getPresetColor(selectedTheme);
+    return selectedTheme == 'default' ? HuxTokens.primary(context) : HuxColors.getPresetColor(selectedTheme);
   }
 
   @override
@@ -34,9 +34,7 @@ class ContextMenuSection extends StatelessWidget {
             Text(
               'Right-click on any of the items below to see the context menu:',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? HuxColors.white70
-                        : HuxColors.black70,
+                    color: Theme.of(context).brightness == Brightness.dark ? HuxColors.white70 : HuxColors.black70,
                   ),
             ),
             const SizedBox(height: 20),
@@ -131,9 +129,7 @@ class ContextMenuSection extends StatelessWidget {
           child: Icon(
             LucideIcons.fileText,
             size: 32,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? HuxColors.white50
-                : HuxColors.black50,
+            color: Theme.of(context).brightness == Brightness.dark ? HuxColors.white50 : HuxColors.black50,
           ),
         ),
       ),
@@ -170,9 +166,7 @@ class ContextMenuSection extends StatelessWidget {
           child: Icon(
             LucideIcons.folder,
             size: 32,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? HuxColors.white50
-                : HuxColors.black50,
+            color: Theme.of(context).brightness == Brightness.dark ? HuxColors.white50 : HuxColors.black50,
           ),
         ),
       ),

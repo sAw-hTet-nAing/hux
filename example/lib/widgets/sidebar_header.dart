@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Sidebar header widget with logo, theme toggle, theme selector, and resource links
 class SidebarHeader extends StatelessWidget {
@@ -50,9 +51,7 @@ class SidebarHeader extends StatelessWidget {
                     size: HuxButtonSize.small,
                     width: HuxButtonWidth.fixed,
                     widthValue: 36,
-                    icon: themeMode == ThemeMode.light
-                        ? LucideIcons.moon
-                        : LucideIcons.sun,
+                    icon: themeMode == ThemeMode.light ? LucideIcons.moon : LucideIcons.sun,
                     child: const SizedBox.shrink(),
                   ),
                 ],
@@ -71,19 +70,15 @@ class SidebarHeader extends StatelessWidget {
                 'Button Theme',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? HuxColors.white80
-                          : HuxColors.black80,
+                      color: Theme.of(context).brightness == Brightness.dark ? HuxColors.white80 : HuxColors.black80,
                     ),
               ),
               const SizedBox(height: 8),
               HuxDropdown<String>(
                 value: selectedTheme,
-                items: HuxColors.availablePresetColors
-                    .map<HuxDropdownItem<String>>((String colorName) {
-                  final color = colorName == 'default'
-                      ? HuxTokens.primary(context)
-                      : HuxColors.getPresetColor(colorName);
+                items: HuxColors.availablePresetColors.map<HuxDropdownItem<String>>((String colorName) {
+                  final color =
+                      colorName == 'default' ? HuxTokens.primary(context) : HuxColors.getPresetColor(colorName);
                   return HuxDropdownItem<String>(
                     value: colorName,
                     child: Row(
@@ -95,8 +90,7 @@ class SidebarHeader extends StatelessWidget {
                             color: color,
                             borderRadius: BorderRadius.circular(4),
                             border: Border.all(
-                              color: Theme.of(context).brightness ==
-                                      Brightness.dark
+                              color: Theme.of(context).brightness == Brightness.dark
                                   ? HuxColors.white30
                                   : HuxColors.black30,
                               width: 0.5,
@@ -134,9 +128,7 @@ class SidebarHeader extends StatelessWidget {
                 'Resources',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? HuxColors.white80
-                          : HuxColors.black80,
+                      color: Theme.of(context).brightness == Brightness.dark ? HuxColors.white80 : HuxColors.black80,
                     ),
               ),
               const SizedBox(height: 8),

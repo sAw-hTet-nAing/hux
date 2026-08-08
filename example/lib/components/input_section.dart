@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import 'section_with_documentation.dart';
 
 class InputSection extends StatefulWidget {
@@ -98,8 +100,7 @@ class _InputSectionState extends State<InputSection> {
                     child: HuxDateInput(
                       label: 'Select Date',
                       hint: 'MM/DD/YYYY',
-                      helperText:
-                          'Click the calendar icon or type the date manually',
+                      helperText: 'Click the calendar icon or type the date manually',
                       onDateChanged: (date) {
                         // Handle date change
                       },

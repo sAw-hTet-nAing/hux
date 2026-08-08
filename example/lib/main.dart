@@ -2,35 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
-import 'components/breadcrumbs_section.dart';
-import 'components/kbd_section.dart';
-import 'components/command_section.dart';
-import 'components/tabs_section.dart';
-import 'components/otp_section.dart';
-import 'components/progress_section.dart';
+import 'components/avatars_section.dart';
+import 'components/badges_section.dart';
 import 'components/bottom_sheet_section.dart';
+import 'components/breadcrumbs_section.dart';
 import 'components/buttons_section.dart';
-import 'components/date_picker_section.dart';
-import 'components/tooltip_section.dart';
-import 'components/dialog_section.dart';
-import 'components/dropdown_section.dart';
-import 'components/pagination_section.dart';
-import 'components/input_section.dart';
 import 'components/cards_section.dart';
 import 'components/charts_section.dart';
-import 'components/context_menu_section.dart';
 import 'components/checkboxes_section.dart';
-import 'components/radio_buttons_section.dart';
-import 'components/toggle_switches_section.dart';
-import 'components/slider_section.dart';
-import 'components/toggle_buttons_section.dart';
-import 'components/badges_section.dart';
-import 'components/snackbars_section.dart';
-import 'components/avatars_section.dart';
+import 'components/command_section.dart';
+import 'components/context_menu_section.dart';
+import 'components/date_picker_section.dart';
+import 'components/dialog_section.dart';
+import 'components/dropdown_section.dart';
+import 'components/input_section.dart';
+import 'components/kbd_section.dart';
 import 'components/loading_section.dart';
-import 'config/navigation_items.dart';
+import 'components/otp_section.dart';
+import 'components/pagination_section.dart';
+import 'components/progress_section.dart';
+import 'components/radio_buttons_section.dart';
+import 'components/slider_section.dart';
+import 'components/snackbars_section.dart';
+import 'components/tabs_section.dart';
+import 'components/toggle_buttons_section.dart';
+import 'components/toggle_switches_section.dart';
+import 'components/tooltip_section.dart';
 import 'config/global_commands.dart';
+import 'config/navigation_items.dart';
 import 'widgets/sidebar_header.dart';
 
 void main() {
@@ -80,8 +81,7 @@ class _MyAppState extends State<MyApp> {
 
   void _toggleTheme() {
     setState(() {
-      _themeMode =
-          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     });
   }
 
@@ -137,9 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Theme state
   String _selectedTheme = 'default';
   Color _currentPrimaryColor(BuildContext context) =>
-      _selectedTheme == 'default'
-          ? HuxTokens.primary(context)
-          : HuxColors.getPresetColor(_selectedTheme);
+      _selectedTheme == 'default' ? HuxTokens.primary(context) : HuxColors.getPresetColor(_selectedTheme);
 
   // Global keys for each section
   final _buttonsKey = GlobalKey();
@@ -327,8 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < 768;
-        final isTablet =
-            constraints.maxWidth >= 768 && constraints.maxWidth < 1024;
+        final isTablet = constraints.maxWidth >= 768 && constraints.maxWidth < 1024;
 
         return Scaffold(
           key: _scaffoldKey,
@@ -384,20 +381,15 @@ class _MyHomePageState extends State<MyHomePage> {
               : null,
           body: Shortcuts(
             shortcuts: const <ShortcutActivator, Intent>{
-              SingleActivator(LogicalKeyboardKey.arrowLeft):
-                  _PaneNavigationIntent(_PaneDirection.left),
-              SingleActivator(LogicalKeyboardKey.arrowRight):
-                  _PaneNavigationIntent(_PaneDirection.right),
-              SingleActivator(LogicalKeyboardKey.arrowUp):
-                  _PaneNavigationIntent(_PaneDirection.up),
-              SingleActivator(LogicalKeyboardKey.arrowDown):
-                  _PaneNavigationIntent(_PaneDirection.down),
+              SingleActivator(LogicalKeyboardKey.arrowLeft): _PaneNavigationIntent(_PaneDirection.left),
+              SingleActivator(LogicalKeyboardKey.arrowRight): _PaneNavigationIntent(_PaneDirection.right),
+              SingleActivator(LogicalKeyboardKey.arrowUp): _PaneNavigationIntent(_PaneDirection.up),
+              SingleActivator(LogicalKeyboardKey.arrowDown): _PaneNavigationIntent(_PaneDirection.down),
             },
             child: Actions(
               actions: <Type, Action<Intent>>{
                 _PaneNavigationIntent: _PaneNavigationAction(
-                  shouldDeferToFocusedWidget:
-                      _isArrowKeyOwnedByInteractiveWidget,
+                  shouldDeferToFocusedWidget: _isArrowKeyOwnedByInteractiveWidget,
                   onNavigate: (_PaneNavigationIntent intent) {
                     switch (intent.direction) {
                       case _PaneDirection.left:
@@ -569,8 +561,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 // Dialog Section
                                 DialogSection(
                                   key: _dialogKey,
-                                  onShowConfirmationDialog:
-                                      _showConfirmationDialog,
+                                  onShowConfirmationDialog: _showConfirmationDialog,
                                 ),
                                 const SizedBox(height: 32),
                                 // Bottom Sheet Section
@@ -633,8 +624,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       title: 'Confirm Action',
       subtitle: 'Are you sure you want to proceed?',
-      content: const Text(
-          'This action cannot be undone. Please confirm that you want to continue.'),
+      content: const Text('This action cannot be undone. Please confirm that you want to continue.'),
       actions: [
         HuxButton(
           onPressed: () => Navigator.of(context).pop(false),

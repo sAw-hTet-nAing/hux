@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class BreadcrumbsSection extends StatefulWidget {
   const BreadcrumbsSection({super.key});

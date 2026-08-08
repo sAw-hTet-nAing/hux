@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import 'section_with_documentation.dart';
 
 class BottomSheetSection extends StatelessWidget {
@@ -29,8 +31,7 @@ class BottomSheetSection extends StatelessWidget {
               alignment: WrapAlignment.center,
               children: [
                 HuxButton(
-                  onPressed: () =>
-                      showSettingsBottomSheet(context, onShowSnackBar),
+                  onPressed: () => showSettingsBottomSheet(context, onShowSnackBar),
                   variant: HuxButtonVariant.outline,
                   child: const Text('Show Bottom Sheet'),
                 ),

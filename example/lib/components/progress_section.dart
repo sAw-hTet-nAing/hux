@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 import 'section_with_documentation.dart';
 
@@ -76,8 +77,7 @@ class _ProgressSectionState extends State<ProgressSection> {
         backgroundColor: HuxColors.white5,
         borderColor: HuxTokens.borderSecondary(context),
         title: 'Progress',
-        subtitle:
-            'Linear progress indicators for task completion and status tracking',
+        subtitle: 'Linear progress indicators for task completion and status tracking',
         action: HuxTooltip(
           message: 'Reset progress',
           child: Semantics(

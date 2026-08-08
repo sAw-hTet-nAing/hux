@@ -1,4 +1,5 @@
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 /// Navigation items configuration for the sidebar
 class NavigationItems {

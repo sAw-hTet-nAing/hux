@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import 'section_with_documentation.dart';
 
 class ButtonsSection extends StatefulWidget {
@@ -21,9 +23,7 @@ class _ButtonsSectionState extends State<ButtonsSection> {
   bool _showIconButtons = true;
 
   Color _currentPrimaryColor(BuildContext context) =>
-      widget.selectedTheme == 'default'
-          ? HuxTokens.primary(context)
-          : HuxColors.getPresetColor(widget.selectedTheme);
+      widget.selectedTheme == 'default' ? HuxTokens.primary(context) : HuxColors.getPresetColor(widget.selectedTheme);
 
   Widget _buildSizeButton(String label, HuxButtonSize size) {
     final isSelected = _selectedButtonSize == size;
@@ -116,32 +116,28 @@ class _ButtonsSectionState extends State<ButtonsSection> {
                       runSpacing: 12,
                       children: [
                         HuxButton(
-                          onPressed: () =>
-                              widget.onShowSnackBar('Primary pressed'),
+                          onPressed: () => widget.onShowSnackBar('Primary pressed'),
                           primaryColor: _currentPrimaryColor(context),
                           size: _selectedButtonSize,
                           icon: _showIconButtons ? LucideIcons.upload : null,
                           child: const Text('Primary'),
                         ),
                         HuxButton(
-                          onPressed: () =>
-                              widget.onShowSnackBar('Secondary pressed'),
+                          onPressed: () => widget.onShowSnackBar('Secondary pressed'),
                           variant: HuxButtonVariant.secondary,
                           size: _selectedButtonSize,
                           icon: _showIconButtons ? LucideIcons.upload : null,
                           child: const Text('Secondary'),
                         ),
                         HuxButton(
-                          onPressed: () =>
-                              widget.onShowSnackBar('Outline pressed'),
+                          onPressed: () => widget.onShowSnackBar('Outline pressed'),
                           variant: HuxButtonVariant.outline,
                           size: _selectedButtonSize,
                           icon: _showIconButtons ? LucideIcons.upload : null,
                           child: const Text('Outline'),
                         ),
                         HuxButton(
-                          onPressed: () =>
-                              widget.onShowSnackBar('Ghost pressed'),
+                          onPressed: () => widget.onShowSnackBar('Ghost pressed'),
                           variant: HuxButtonVariant.ghost,
                           size: _selectedButtonSize,
                           icon: _showIconButtons ? LucideIcons.upload : null,

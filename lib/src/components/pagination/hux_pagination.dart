@@ -1,8 +1,8 @@
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:hux/src/components/buttons/hux_button.dart';
 import 'package:hux/src/theme/hux_tokens.dart';
 import 'package:hux/src/utils/hux_wcag.dart';
-import 'package:flutter/material.dart';
 
 /// A pagination component to navigate through pages.
 ///
@@ -33,8 +33,7 @@ class HuxPagination extends StatelessWidget {
     required this.onPageChanged,
     this.maxPagesToShow = 5,
   })  : assert(totalPages >= 1, 'totalPages must be ≥ 1'),
-        assert(currentPage >= 1 && currentPage <= totalPages,
-            'currentPage must be within 1..totalPages'),
+        assert(currentPage >= 1 && currentPage <= totalPages, 'currentPage must be within 1..totalPages'),
         assert(maxPagesToShow >= 1, 'maxPagesToShow must be ≥ 1');
 
   /// The currently active page. Must be between 1 and [totalPages].
@@ -55,25 +54,22 @@ class HuxPagination extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         HuxButton(
-          onPressed:
-              currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
+          onPressed: currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
           variant: HuxButtonVariant.outline,
           isDisabled: currentPage == 1,
           size: HuxButtonSize.small,
-          icon: LucideIcons.chevronLeft,
+          icon: LucideIcons.chevron_left,
           child: const SizedBox(width: 0), // Icon-only button
         ),
         const SizedBox(width: 8),
         ..._buildPageNumbers(context),
         const SizedBox(width: 8),
         HuxButton(
-          onPressed: currentPage < totalPages
-              ? () => onPageChanged(currentPage + 1)
-              : null,
+          onPressed: currentPage < totalPages ? () => onPageChanged(currentPage + 1) : null,
           variant: HuxButtonVariant.outline,
           isDisabled: currentPage == totalPages,
           size: HuxButtonSize.small,
-          icon: LucideIcons.chevronRight,
+          icon: LucideIcons.chevron_right,
           child: const SizedBox(width: 0), // Icon-only button
         ),
       ],

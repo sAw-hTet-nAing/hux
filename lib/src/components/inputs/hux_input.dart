@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:hux/src/widgets/hux_text_field_label.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../theme/hux_tokens.dart';
 
@@ -175,7 +175,7 @@ class _HuxInputState extends State<HuxInput> {
                 color: HuxTokens.iconSecondary(context),
               ),
               child: Icon(
-                _obscureText ? LucideIcons.eye : LucideIcons.eyeOff,
+                _obscureText ? LucideIcons.eye : LucideIcons.eye_off,
               ),
             ),
           ),

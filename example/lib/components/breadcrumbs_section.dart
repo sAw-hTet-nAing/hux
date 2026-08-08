@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import 'section_with_documentation.dart';
 
 class BreadcrumbsSection extends StatefulWidget {
@@ -29,8 +31,7 @@ class _BreadcrumbsSectionState extends State<BreadcrumbsSection> {
         backgroundColor: HuxColors.white5,
         borderColor: HuxTokens.borderSecondary(context),
         title: 'Breadcrumbs',
-        subtitle:
-            'Show users their current location and provide easy navigation',
+        subtitle: 'Show users their current location and provide easy navigation',
         action: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

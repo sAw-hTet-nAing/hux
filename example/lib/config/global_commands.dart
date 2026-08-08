@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import '../components/bottom_sheet_section.dart';
 
 /// Global commands configuration for the command palette

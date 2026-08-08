@@ -1,7 +1,9 @@
-import 'dart:ui';
 import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+
 import '../../theme/hux_tokens.dart';
 import '../buttons/hux_button.dart';
 import '../tooltip/hux_tooltip.dart';
@@ -189,12 +191,8 @@ class HuxSnackbar {
                             if (title != null) ...[
                               Text(
                                 title!,
-                                style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.copyWith(
-                                          fontWeight: FontWeight
-                                              .w600, // Consistent with Hux typography
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                          fontWeight: FontWeight.w600, // Consistent with Hux typography
                                           color: textColor ?? _getTextColor(context),
                                         ) ??
                                     TextStyle(
@@ -236,10 +234,7 @@ class HuxSnackbar {
                           child: InkWell(
                             onTap: () {
                               onDismiss?.call();
-                              (onCloseRequest ??
-                                      () => ScaffoldMessenger.of(context)
-                                          .hideCurrentSnackBar())
-                                  .call();
+                              (onCloseRequest ?? () => ScaffoldMessenger.of(context).hideCurrentSnackBar()).call();
                             },
                             borderRadius: BorderRadius.circular(8),
                             child: Padding(
@@ -293,10 +288,7 @@ class HuxSnackbar {
               HuxButton(
                 onPressed: () {
                   a.onPressed();
-                  (onCloseRequest ??
-                          () =>
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar())
-                      .call();
+                  (onCloseRequest ?? () => ScaffoldMessenger.of(context).hideCurrentSnackBar()).call();
                 },
                 variant: HuxButtonVariant.primary,
                 size: HuxButtonSize.small,
@@ -376,11 +368,11 @@ class HuxSnackbar {
       case HuxSnackbarVariant.info:
         return LucideIcons.info;
       case HuxSnackbarVariant.success:
-        return LucideIcons.checkCircle;
+        return LucideIcons.circle_check;
       case HuxSnackbarVariant.warning:
-        return LucideIcons.alertTriangle;
+        return LucideIcons.triangle_alert;
       case HuxSnackbarVariant.error:
-        return LucideIcons.alertCircle;
+        return LucideIcons.circle_alert;
     }
   }
 }
@@ -422,8 +414,7 @@ extension HuxSnackbarExtension on BuildContext {
     Color? actionTextColor,
     double elevation = 6,
     EdgeInsets margin = const EdgeInsets.all(16),
-    EdgeInsets padding =
-        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     ShapeBorder? shape,
   }) {
     final snackbar = HuxSnackbar(
@@ -460,11 +451,9 @@ class HuxSnackbarStackController {
   final BuildContext _context;
 
   /// Returns a controller instance associated with [context].
-  static HuxSnackbarStackController of(BuildContext context) =>
-      HuxSnackbarStackController._(context);
+  static HuxSnackbarStackController of(BuildContext context) => HuxSnackbarStackController._(context);
 
-  static final ValueNotifier<List<_HuxSnackbarStackItem>> _items =
-      ValueNotifier<List<_HuxSnackbarStackItem>>([]);
+  static final ValueNotifier<List<_HuxSnackbarStackItem>> _items = ValueNotifier<List<_HuxSnackbarStackItem>>([]);
 
   static OverlayEntry? _entry;
   static OverlayState? _overlayState;
@@ -497,8 +486,7 @@ class HuxSnackbarStackController {
             if (items.isEmpty) return const SizedBox.shrink();
 
             // Oldest at top, newest at bottom (grows upwards from bottom-left).
-            final margin =
-                items.last.snackbar.margin.resolve(Directionality.of(context));
+            final margin = items.last.snackbar.margin.resolve(Directionality.of(context));
             final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
 
             return Positioned(
@@ -528,9 +516,7 @@ class HuxSnackbarStackController {
     // Avoid inserting twice in the same frame (OverlayEntry.mounted won't flip
     // until the next build).
     if (_overlayState != overlay) {
-      if (_isInserted &&
-          (_entry?.mounted ?? false) &&
-          (_overlayState?.mounted ?? false)) {
+      if (_isInserted && (_entry?.mounted ?? false) && (_overlayState?.mounted ?? false)) {
         _entry?.remove();
       }
       _isInserted = false;
@@ -607,8 +593,7 @@ class _StackedSnackbarItemView extends StatefulWidget {
   final _HuxSnackbarStackItem item;
 
   @override
-  State<_StackedSnackbarItemView> createState() =>
-      _StackedSnackbarItemViewState();
+  State<_StackedSnackbarItemView> createState() => _StackedSnackbarItemViewState();
 }
 
 class _StackedSnackbarItemViewState extends State<_StackedSnackbarItemView> {
@@ -655,8 +640,7 @@ class _StackedSnackbarItemViewState extends State<_StackedSnackbarItemView> {
       variant: sb.variant,
       title: sb.title,
       onDismiss: sb.onDismiss,
-      onCloseRequest: () =>
-          HuxSnackbarStackController._beginRemove(widget.item.id),
+      onCloseRequest: () => HuxSnackbarStackController._beginRemove(widget.item.id),
       showIcon: sb.showIcon,
       duration: sb.duration,
       action: sb.action,

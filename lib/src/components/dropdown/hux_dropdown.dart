@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../../theme/hux_tokens.dart';
 import '../../utils/hux_wcag.dart';
@@ -75,8 +75,7 @@ class _HuxDropdownState<T> extends State<HuxDropdown<T>> {
 
     return widget.items.firstWhere(
       (item) => item.value == widget.value,
-      orElse: () => HuxDropdownItem(
-          value: widget.value as T, child: Text('${widget.value}')),
+      orElse: () => HuxDropdownItem(value: widget.value as T, child: Text('${widget.value}')),
     );
   }
 
@@ -88,8 +87,7 @@ class _HuxDropdownState<T> extends State<HuxDropdown<T>> {
   Future<void> _openDropdown() async {
     if (!widget.enabled || widget.items.isEmpty) return;
 
-    final RenderBox? button =
-        _buttonKey.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? button = _buttonKey.currentContext?.findRenderObject() as RenderBox?;
     if (button == null) return;
 
     final buttonPosition = button.localToGlobal(Offset.zero);
@@ -164,9 +162,7 @@ class _HuxDropdownState<T> extends State<HuxDropdown<T>> {
                             ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
-                              color: isSelected
-                                  ? HuxTokens.primary(context).withAlpha(26)
-                                  : null,
+                              color: isSelected ? HuxTokens.primary(context).withAlpha(26) : null,
                             ),
                             child: Row(
                               children: [
@@ -218,8 +214,7 @@ class _HuxDropdownState<T> extends State<HuxDropdown<T>> {
         style: TextStyle(
           color: widget.variant == HuxButtonVariant.primary
               ? HuxWCAG.getContrastingTextColor(
-                  backgroundColor:
-                      widget.primaryColor ?? HuxTokens.primary(context),
+                  backgroundColor: widget.primaryColor ?? HuxTokens.primary(context),
                   context: context,
                 )
               : HuxTokens.textSecondary(context),
@@ -242,8 +237,7 @@ class _HuxDropdownState<T> extends State<HuxDropdown<T>> {
       style: TextStyle(
         color: widget.variant == HuxButtonVariant.primary
             ? HuxWCAG.getContrastingTextColor(
-                backgroundColor:
-                    widget.primaryColor ?? HuxTokens.primary(context),
+                backgroundColor: widget.primaryColor ?? HuxTokens.primary(context),
                 context: context,
               )
             : HuxTokens.textPrimary(context),
@@ -265,12 +259,11 @@ class _HuxDropdownState<T> extends State<HuxDropdown<T>> {
           Expanded(child: _buildSelectedItem()),
           const SizedBox(width: 8),
           Icon(
-            _isOpen ? LucideIcons.chevronUp : LucideIcons.chevronDown,
+            _isOpen ? LucideIcons.chevron_up : LucideIcons.chevron_down,
             size: 16,
             color: widget.variant == HuxButtonVariant.primary
                 ? HuxWCAG.getContrastingTextColor(
-                    backgroundColor:
-                        widget.primaryColor ?? HuxTokens.primary(context),
+                    backgroundColor: widget.primaryColor ?? HuxTokens.primary(context),
                     context: context,
                   )
                 : HuxTokens.iconSecondary(context),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import 'section_with_documentation.dart';
 
 class TabsSection extends StatefulWidget {
@@ -81,10 +83,7 @@ class _TabsSectionState extends State<TabsSection> {
                 HuxTabItem(
                   label: 'Profile',
                   icon: LucideIcons.user,
-                  badge: HuxBadge(
-                      label: '3',
-                      variant: HuxBadgeVariant.primary,
-                      size: HuxBadgeSize.small),
+                  badge: HuxBadge(label: '3', variant: HuxBadgeVariant.primary, size: HuxBadgeSize.small),
                   content: Center(child: Text('Profile content goes here')),
                 ),
               ],

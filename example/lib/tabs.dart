@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hux/hux.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class TabsSection extends StatefulWidget {
   const TabsSection({super.key});
